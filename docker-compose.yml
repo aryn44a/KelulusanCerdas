@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: kelulusan-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/students.db:/app/students.db
+    networks:
+      - kelulusan-net
+
+  frontend:
+    build: ./frontend
+    container_name: kelulusan-frontend
+    ports:
+      - "5174:80"
+    depends_on:
+      - backend
+    networks:
+      - kelulusan-net
+
+networks:
+  kelulusan-net:
+    driver: bridge
